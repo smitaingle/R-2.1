@@ -1,0 +1,159 @@
+-- # 2.1 Introduction to R (  details is in third session fundamental  of R 1)
+  
+5. Problem Statement 
+1. What are the different methods to call a function in R? 
+Ans: Arguments by position, Arguments by names, no arguments(default)
+Explanation:
+		We can call a function in R in 3 ways. 
+		1# Call the function by position of arguments.
+		new.function(5,3,11)
+
+		2# Call the function by names of the arguments.
+		new.function(a = 11, b = 5, c = 3)
+
+		3# Create a function with arguments.
+		new.function <- function(a = 3, b = 6) {
+		   result <- a * b
+		   print(result)
+		}
+
+		# Call the function without giving any argument.6
+		new.function()
+
+		# Call the function with giving new values of the argument.
+		new.function(9,5)
+
+
+2. The lazy evaluation of a function means, the argument is evaluated only ,if it is used inside the body of the function. 
+Say True or False. 
+Ans:True
+Explanation :The argument evaluated only , if it needs to be evaluated,
+			lazy evaluation, or call-by-need[1] is an evaluation strategy which delays the evaluation of an expression until its value is needed .
+			Performance increases by avoiding needless calculations, and avoiding error conditions when evaluating compound expressions.
+			Lazy evaluation can lead to reduction in memory footprint, since values are created when needed.[5] However, lazy evaluation is difficult to combine with imperative features such as exception handling and input/output, because the order of operations becomes indeterminate.
+			When you 70 
+
+			what_is_love <- function(f) {
+			  function(...) {
+				cat('f is', f, '\n')
+			  }
+			}
+			the inner function creates an enclosure for f, but the catch is that until you actually use a variable passed to a function, it remains a "promise" and is not actually evaluated. If you want to "capture" the current value of f, then you need to force the evaluation of the promise; you can use the force() function fo this.
+
+			what_is_love <- function(f) {
+			  force(f)
+			  function(...) {
+				cat('f is', f, '\n')
+			  }
+			}
+			funs <- lapply(c('love', 'cherry'), what_is_love)
+
+			funs[[1]]()
+			# f is love 
+			funs[[2]]()
+			# f is cherry 
+			Without force(), f remains a promise inside both of the functions in your list. It is not evaluated until you call the function, and when you call the function that promise is evaluated to the last known value for f which is "cherry."
+
+
+3. State True or False: 
+a. Insights driven from descriptive analytics is not meaningful. 
+Ans : False
+		Explanation :  Descriptive modeling tools can be utilized to develop further models that can simulate large number of individualized agents and make predictions. 
+				for example, to categorize customers by their product preferences and life stage.
+				For example, descriptive analytics examines historical electricity usage data to help plan power needs and allow electric companies to set optimal prices.
+
+
+b. The number of values in each Elements of a list, should be equal. 
+Ans :False
+explanation : # Create a list containing a vector, a matrix and a list.
+				list_data <- list(c("Jan","Feb","Mar"), matrix(c(3,9,5,1,-2,8), nrow = 2),
+				   list("green",12.3))
+				   
+				/* extra info
+				# Give names to the elements in the list.
+				names(list_data) <- c("1st Quarter", "A_Matrix", "A Inner list")
+				# Access the first element of the list.
+				print(list_data[1])
+				# Access the third element. As it is also a list, all its elements will be printed.
+				print(list_data[3])
+				# Access the list element using the name of the element.
+				print(list_data$A_Matrix)
+				*/
+
+c. The datasets are not stored in memory of the computer using R. 
+Ans: False 
+ Explanation 
+		 In R  all objects and values are stored memory.
+		 object_size() function  (from package pryr ), This function tells you how many bytes of memory an object occupies:
+		 ex object_size(1:10) op=88 B , object_size(mtcars) = 7 kb etc..
+		 To free the memory (or remove object from memeory)used rm function ex . rm(x) ,x is object .
+
+
+ 
+d. Data frames and matrices are two dimensional however the array is multidimensional. 
+Ans : True
+Explanation 
+		1 Array :
+
+		> array(1:24,dim=c(4,3,2))
+		, , 1
+
+			 [,1] [,2] [,3]
+		[1,]    1    5    9
+		[2,]    2    6   10
+		[3,]    3    7   11
+		[4,]    4    8   12
+
+		, , 2
+
+			 [,1] [,2] [,3]
+		[1,]   13   17   21
+		[2,]   14   18   22
+		[3,]   15   19   23
+		[4,]   16   20   24
+
+		2. Matrices :
+		> matrix(1:9,nrow=3 , ncol=3)
+			 [,1] [,2] [,3]
+		[1,]    1    4    7
+		[2,]    2    5    8
+		[3,]    3    6    9
+
+
+		3. Datafrmaes
+
+		> # dataframes
+		> x <- 1:10
+		> x2 <- rep("Acadglid", 10)
+		> x3 <- seq (1,20,2)
+		> x4 <- c(1,2,NA,10,5:10)
+		> x1 <- 1:10
+		> x1
+		 [1]  1  2  3  4  5  6  7  8  9 10
+		> x2
+		 [1] "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid" "Acadglid"
+		> x3
+		 [1]  1  3  5  7  9 11 13 15 17 19
+		> x4
+		 [1]  1  2 NA 10  5  6  7  8  9 10
+		> data.frame(x1,x2,x3,x4)
+		   x1       x2 x3 x4
+		1   1 Acadglid  1  1
+		2   2 Acadglid  3  2
+		3   3 Acadglid  5 NA
+		4   4 Acadglid  7 10
+		5   5 Acadglid  9  5
+		6   6 Acadglid 11  6
+		7   7 Acadglid 13  7
+		8   8 Acadglid 15  8
+		9   9 Acadglid 17  9
+		10 10 Acadglid 19 10
+		> d <- data.frame(x1,x2,x3,x4)
+		> class(d)
+		[1] "data.frame"
+
+		~d is the dataframes of single dimention of 10*4
+		~ A data frame is a special type of list where every element of the list has same length
+
+
+ 
